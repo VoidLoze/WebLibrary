@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}"></div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <h2>Отзывы:</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Отзыв</th>
+                <th>Рейтинг</th>
+                <th>Читатель</th>
+                <th>Книга</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review : ${reviews}">
+                <td th:text="${review.description}">Отзыв</td>
+                <td th:text="${review.rate}">Рейтинг</td>
+                <td th:text="${review.readerId.firstName}">Автор отзыва</td>
+                <td th:text="${review.book.name}">Книга</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

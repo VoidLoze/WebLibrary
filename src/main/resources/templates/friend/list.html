@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        /* Стиль для таблицы */
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Стиль для кнопки */
+        .add-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Стиль для заголовков и текста */
+        h1, p {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar}"></div>
+
+<h1>Your Friends</h1>
+
+<div th:if="${error}">
+    <p th:text="${error}"></p>
+</div>
+
+<div th:if="${friends.isEmpty()}">
+    <p>You have no friends yet.</p>
+</div>
+
+<div>
+    <table th:if="${not #lists.isEmpty(friends)}">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="friend : ${friends}">
+            <td th:text="${friend.firstName}"></td>
+            <td th:text="${friend.lastName}"></td>
+            <td>
+                <form th:action="@{/friend/{id}/delete(id=${friend.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="add-btn">Удалить друга</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+<div>
+    <a class="add-btn" th:href="@{/friend/add}">Add a New Friend</a>
+</div>
+
+
+</body>
+</html>

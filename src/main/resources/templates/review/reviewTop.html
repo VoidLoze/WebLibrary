@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 align-self-center pt-5">
+                <h1>Top 3 Books by Average Rating</h1>
+                <div th:if="${topBooks != null and !topBooks.isEmpty()}">
+                    <ul class="list-group">
+                        <li th:each="book : ${topBooks}" class="list-group-item">
+                            <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.name}" class="text-decoration-none text-dark"></a>
+                            <span class="ms-2"> (Average Rating: <span th:text="${#numbers.formatDecimal(book.averageRating, 1, 1)}"></span>)</span>
+                            <a th:href="@{/book/{id}/reviews(id=${book.id})}" class="ms-2 badge rounded-pill bg-primary">Reviews</a>
+                        </li>
+                    </ul>
+                </div>
+                <div th:unless="${topBooks != null and !topBooks.isEmpty()}">
+                    <p>No books found yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Тут такое дело</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="alert alert-danger mt-5" role="alert">
+        <h4 class="alert-heading">Этот пользователь уже является вашим другом</h4>
+        <p th:text="${errorMessage}"></p>
+        <a href="#" class="btn btn-primary" th:href="@{/friend}">Вернуться к списку друзей</a>
+        <a href="#" class="btn btn-primary" th:href="@{/friend/add}">Вернуться к добавлению</a>
+    </div>
+</div>
+</body>
+</html>

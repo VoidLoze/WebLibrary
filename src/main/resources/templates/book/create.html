@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1>Добавить книгу</h1>
+                </div>
+                <form th:action="@{/admin/book/create}" th:method="post" th:object="${form}" class="m-md-auto w-50 pb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Название</label>
+                        <input th:field="*{name}" type="text" class="form-control text-center" id="name"/>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                    <label for="authorId" class="form-label">Автор</label>
+                        <select th:field="*{authorId}" class="form-select" id="authorId" required>
+                            <option value="">Выберите автора</option>
+                            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.lastName}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('authorId')}" th:errors="*{authorId}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genreId" class="form-label">Жанр</label>
+                        <select th:field="*{genreId}" class="form-select" id="genreId" required>
+                            <option value="">Выберите жанр</option>
+                            <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.nameOfGenre}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('genreId')}" th:errors="*{genreId}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="yearRealise">Дата выхода</label>
+                        <input th:field="*{yearRealise}"
+                               th:errorclass="is-invalid"
+                               type="text"
+                               class="form-control text-center"
+                               id="yearRealise"/>
+                        <small th:if="${#fields.hasErrors('yearRealise')}"
+                               th:errors="*{yearRealise}"
+                               class="text-danger">Error message</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Создать книгу</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

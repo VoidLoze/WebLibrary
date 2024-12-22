@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Последние отзывы</title>
+</head>
+<body>
+<h1>Последние отзывы для книги с ID: <span th:text="${bookId}"></span></h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Автор</th>
+        <th>Рейтинг</th>
+        <th>Отзыв</th>
+        <th>Дата создания</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="review : ${latestReviews}">
+        <td th:text="${review.author}"></td>
+        <td th:text="${review.rating}"></td>
+        <td th:text="${review.comment}"></td>
+        <td th:text="${#dates.format(review.createdAt, 'dd-MM-yyyy')}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/books/{bookId}(bookId=${bookId})}">Назад к книге</a>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body>
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h1>Reviews for Book ID: <span th:text="${bookId}"></span></h1>
+                <div th:if="${reviews != null and !reviews.isEmpty()}">
+                    <ul class="list-group">
+                        <li th:each="review : ${reviews}" class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="mb-1"><b>Author:</b> <span th:text="${review.readerId.firstName}"></span></p>
+                                    <p class="mb-1"><b>Rating:</b> <span th:text="${review.rate}"></span></p>
+                                    <p class="mb-0"><b>Comment:</b> <span th:text="${review.description}"></span></p>
+<!--                                    <p><b>Date:</b> <span th:text="${#dates.format(review.createdAt, 'dd.MM.yyyy')}"></span></p>-->
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div th:unless="${reviews != null and !reviews.isEmpty()}">
+                    <p>No reviews found for this book yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

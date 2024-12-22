@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <h1>Add a Friend</h1>
+
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
+
+        <!-- Form to add a friend -->
+        <form th:action="@{/friend/add}" method="post">
+            <!-- Hidden field to store the logged-in user's readerId -->
+            <input type="hidden" th:value="${readerId}" name="readerId"/>
+
+            <label for="friendReaderId">Select a friend to add:</label>
+            <select id="friendReaderId" name="friendReaderId" required>
+                <option value="" disabled selected>Select a friend</option>
+
+                <!-- Loop through available readers and populate the options -->
+                <th:block th:each="reader : ${availableReaders}">
+                    <option th:value="${reader.id}" th:text="${reader.firstName} + ' ' + ${reader.lastName}"></option>
+                </th:block>
+            </select>
+
+            <button type="submit">Add Friend</button>
+        </form>
+
+        <!-- Link to go back to the list of friends -->
+        <a th:href="@{/friend/{readerId}(readerId=${readerId})}">Back to Friends List</a>
+    </div>
+</main>
+<div th:replace="~{fragments/footer}"></div>
+</body>
+</html>

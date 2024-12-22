@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+<main>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h1 class="text-center">Create Order</h1>
+                <form th:action="@{/order/create}" th:method="post" th:object="${form}" class="m-md-auto w-50 pb-3">
+                    <div class="mb-3">
+                        <label for="orderDate" class="form-label">Дата заказа:</label>
+                        <input type="date" th:field="*{orderDate}" class="form-control" id="orderDate" required/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('orderDate')}" th:errors="*{orderDate}"></div>
+                    </div>
+
+                    <div>
+                        <label for="readerId">Reader:</label>
+                        <span th:text="${currentUser?.firstName + ' ' + currentUser?.lastName}" th:if="${currentUser}"></span>
+                        <input type="hidden" th:name="currentReaderId" th:value="${currentReaderId}" />  <!-- Hidden field for readerId -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bookId" class="form-label">Book</label>
+                        <select th:field="*{bookId}" class="form-select" id="bookId" required>
+                            <option value="">Select Book</option>
+                            <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.name}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('bookId')}" th:errors="*{bookId}" class="text-danger"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+    <footer th:replace="~{fragments/footer}"/>
+</body>
+</html>
